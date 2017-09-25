@@ -17,6 +17,7 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			PreparedStatement stmt = con.prepareStatement("SELECT response FROM lab3_table WHERE concat('', ?) LIKE concat('%', keyword, '%')");
 			stmt.setString(1, text);
 			ResultSet rs = stmt.executeQuery();
+
 			String rtval = null;
 			while(rs.next() && rtval == null) {
 				rtval = rs.getString(1);
@@ -24,6 +25,10 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 
 			rs.close();
 			stmt.close();
+			PreparedStatement stmt2 = con.prepareStatement("UPDATE lab3_table SET count = concat(count) + 1 WHERE concat('', ?) LIKE concat('%', keyword, '%')");
+			stmt2.setString(1, text);
+			stmt2.executeQuery();
+			stmt2.close();
 			con.close();
 			log.info("RETURN VAL {}", rtval);
 			return rtval;
