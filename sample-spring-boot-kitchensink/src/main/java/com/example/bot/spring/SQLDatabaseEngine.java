@@ -25,10 +25,10 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 
 			rs.close();
 			stmt.close();
-			PreparedStatement stmt2 = con.prepareStatement("UPDATE lab3_table SET count = concat(count) + 1 WHERE concat('', ?) LIKE concat('%', keyword, '%')");
-			stmt2.setString(1, text);
-			stmt2.executeQuery();
-			stmt2.close();
+			PreparedStatement update_cnt = con.prepareStatement("UPDATE lab3_table SET cnt = cnt+1 WHERE response = ?");
+			update_cnt.setString(1, rtval);
+			update_cnt.executeUpdate();
+			update_cnt.close();
 			con.close();
 			log.info("RETURN VAL {}", rtval);
 			return rtval;
